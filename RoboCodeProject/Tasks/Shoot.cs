@@ -8,14 +8,15 @@ namespace RoboCodeProject
 {
     class Shoot:BTNode
     {
-
-        public Shoot(BlackBoard blackBoard)
+        private int damage;
+        public Shoot(BlackBoard blackBoard, int _damage = 1)
         {
             this.blackBoard = blackBoard;
+            damage = _damage;
         }
         public override BTNodeStatus Tick()
         {
-            blackBoard.robot.Fire(1);
+            blackBoard.robot.Fire(damage);
             return BTNodeStatus.succes;
         }
 

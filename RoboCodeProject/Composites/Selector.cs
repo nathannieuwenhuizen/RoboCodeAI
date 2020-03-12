@@ -28,6 +28,7 @@ namespace RoboCodeProject
                 {
                     case BTNodeStatus.failed:
                         continue;
+                        //if the task fails, move to the next task until it isnt failing
                     case BTNodeStatus.running:
                         return BTNodeStatus.running;
                     case BTNodeStatus.succes:

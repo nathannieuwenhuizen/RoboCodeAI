@@ -3,28 +3,57 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Robocode;
 
 namespace RoboCodeProject
 {
-    public class ScanRobot : TurnTask
+    public class TurnGunToEnemy: TurnTask
     {
-        private float scanDegrees;
-        public ScanRobot(BlackBoard blackBoard, float scanDegrees = 0, Orientation _orientation = Orientation.none)
+        public TurnGunToEnemy(BlackBoard blackBoard, bool _toEnemy = true, Orientation _orientation = Orientation.none)
         {
+            toEnemy = _toEnemy;
+            if (_orientation != Orientation.none)
+            {
+                blackBoard.gunOrientation = _orientation;
+            }
+
             this.blackBoard = blackBoard;
-            this.scanDegrees = scanDegrees;
-            orientation = _orientation;
         }
+
         public override BTNodeStatus Tick()
         {
-            if (orientation == Orientation.none)
+            double rotation = 0;
+            double accuracy = 5;
+
+                            blackBoard.robot.Out.WriteLine("Orientation: " + blackBoard.gunOrientation + " | rotation " + rotation);
+
+            if (toEnemy)
             {
-                blackBoard.robot.TurnRadarLeft(scanDegrees);
+                if (blackBoard.lastScannedRobotEvent != null)
+                {
+                    rotation = GetAngleOfGunHeading(); 
+                    double distance = blackBoard.lastScannedRobotEvent.Distance;
+                    accuracy = 180 / (distance * 0.1f);
+
+                    blackBoard.robot.SetTurnGunRight(rotation);
+
+                    return BTNodeStatus.succes;
+
+
+                    if (Math.Abs(rotation) < accuracy)
+                    {
+                        return BTNodeStatus.succes;
+                    }
+                    else
+                    {
+                        return BTNodeStatus.running;
+                    }
+
+                }
             } else
             {
-                double rotation = 0;
-                double localRotation = blackBoard.robot.RadarHeading - blackBoard.robot.Heading;
-                double accuracy = 1;
+                double localRotation = blackBoard.robot.GunHeading - blackBoard.robot.Heading;
+
                 switch (blackBoard.gunOrientation)
                 {
                     case Orientation.left:
@@ -48,28 +77,26 @@ namespace RoboCodeProject
                 rotation = (360 + rotation) % 360;
                 if (rotation < 180)
                 {
-                    blackBoard.robot.TurnRadarRight(rotation);
+                    blackBoard.robot.SetTurnGunRight(rotation);
                 }
                 else
                 {
-                    blackBoard.robot.TurnRadarLeft(360 - rotation);
+                    blackBoard.robot.SetTurnGunLeft(360 - rotation);
                 }
-
 
                 if (Math.Abs(rotation) < accuracy)
                 {
-                    blackBoard.robot.TurnRadarLeft(5);
-                    blackBoard.robot.TurnRadarRight(5);
-
                     return BTNodeStatus.succes;
                 }
                 else
                 {
                     return BTNodeStatus.running;
                 }
+
             }
-            return BTNodeStatus.succes;
+            return BTNodeStatus.failed;
         }
+
 
     }
 }

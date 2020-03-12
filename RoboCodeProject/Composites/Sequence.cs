@@ -21,6 +21,7 @@
                     case BTNodeStatus.running:
                         return BTNodeStatus.running;
                     case BTNodeStatus.succes:
+                        //only at succes it moves on to the next task
                         break;
                     default:
                         break;

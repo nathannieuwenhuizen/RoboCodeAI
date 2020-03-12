@@ -7,36 +7,90 @@ using Robocode;
 
 namespace RoboCodeProject
 {
-    class TurnHeadingToEnemy : TurnTask
+    public class TurnHeadingToEnemy : TurnTask
     {
-        public TurnHeadingToEnemy(BlackBoard blackBoard)
+        public TurnHeadingToEnemy(BlackBoard blackBoard, bool _toEnemy = true, Orientation _orientation = Orientation.none)
         {
+            toEnemy = _toEnemy;
+            if (_orientation != Orientation.none)
+            {
+                blackBoard.desiredOrientation = _orientation;
+            }
             this.blackBoard = blackBoard;
         }
 
         public override BTNodeStatus Tick()
         {
+            double rotation = 0;
+            double accuracy = 5;
 
-            if (blackBoard.lastScannedRobotEvent != null)
+            if (toEnemy)
             {
-                //GetRotationToScannedRobotFuture();
-                double rotation = GetAngleOfHeading();
-                blackBoard.robot.Out.WriteLine("Angle: " + rotation);
-
-                blackBoard.robot.TurnRight(rotation);
-                blackBoard.robot.Ahead(10);
-
-                if (Math.Abs(rotation) < 10)
+                if (blackBoard.lastScannedRobotEvent != null)
                 {
-                    return BTNodeStatus.succes;
+
+                    //heading angle to enemy
+                    rotation = GetAngleOfHeading();
+
+                    //distance to enemy
+                    double distance = blackBoard.lastScannedRobotEvent.Distance;
+
+                    //be more accurate when the enmy is more far away
+                    accuracy = 180 / (distance * 0.5f);
+
+                    blackBoard.robot.SetTurnRight(rotation);
+                    if (rotation > 180)
+                    {
+                        blackBoard.robot.SetTurnLeft(360 - rotation);
+                    }
+                    else
+                    {
+                        blackBoard.robot.SetTurnRight(rotation);
+                    }
+                }
+
+            } else
+            {
+                switch (blackBoard.desiredOrientation)
+                {
+                    case Orientation.left:
+                        rotation = 270 - blackBoard.robot.Heading;
+                        break;
+                    case Orientation.right:
+                        rotation = 90 -blackBoard.robot.Heading;
+                        break;
+                    case Orientation.forth:
+                        rotation = -blackBoard.robot.Heading;
+                        break;
+                    case Orientation.bottom:
+                        rotation = 180 -blackBoard.robot.Heading;
+                        break;
+                    case Orientation.none:
+                        break;
+                   
+                }
+                rotation = (360 + rotation) % 360;
+                if (rotation < 180)
+                {
+                    blackBoard.robot.SetTurnRight(rotation);
                 }
                 else
                 {
-                    return BTNodeStatus.running;
+                    blackBoard.robot.SetTurnLeft(360 - rotation);
                 }
 
+
             }
-            return BTNodeStatus.failed;
+
+            if (Math.Abs(rotation) < accuracy)
+            {
+                return BTNodeStatus.succes;
+            }
+            else
+            {
+                return BTNodeStatus.running;
+            }
+
         }
 
 

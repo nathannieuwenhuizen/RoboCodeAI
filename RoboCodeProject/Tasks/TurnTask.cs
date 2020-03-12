@@ -7,10 +7,27 @@ using Robocode;
 
 namespace RoboCodeProject
 {
-    class TurnTask : BTNode
+    public enum Orientation
     {
+        left,
+        right,
+        forth,
+        bottom,
+        none
+    }
+
+    public class TurnTask : BTNode
+    {
+        public bool toEnemy;
+        public Orientation orientation = Orientation.none;
+
         public double GetAngleOfGunHeading()
         {
+            if (blackBoard.lastScannedRobotEvent == null)
+            {
+                return 0;
+            }
+
             double angle = blackBoard.lastScannedRobotEvent.Bearing -
                     (blackBoard.robot.GunHeading - blackBoard.robot.Heading);
 
@@ -23,10 +40,14 @@ namespace RoboCodeProject
         }
         public double GetAngleOfHeading()
         {
+            if (blackBoard.lastScannedRobotEvent == null)
+            {
+                return 0;
+            }
             double angle = blackBoard.lastScannedRobotEvent.Bearing;
 
-            blackBoard.robot.Out.WriteLine("Bearing: " + blackBoard.lastScannedRobotEvent.Bearing);
-            blackBoard.robot.Out.WriteLine("Heading: " + blackBoard.robot.Heading);
+            //blackBoard.robot.Out.WriteLine("Bearing: " + blackBoard.lastScannedRobotEvent.Bearing);
+            //blackBoard.robot.Out.WriteLine("Heading: " + blackBoard.robot.Heading);
 
             if (angle < -180)
             {
@@ -39,8 +60,12 @@ namespace RoboCodeProject
 
         public double GetRotationToScannedRobotFuture()
         {
-            ScannedRobotEvent enemy = blackBoard.lastScannedRobotEvent;
 
+            ScannedRobotEvent enemy = blackBoard.lastScannedRobotEvent;
+            if (enemy == null)
+            {
+                return 0;
+            }
 
             double angleToEnemy = enemy.Bearing;
 
