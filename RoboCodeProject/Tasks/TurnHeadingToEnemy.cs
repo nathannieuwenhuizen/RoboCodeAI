@@ -7,9 +7,9 @@ using Robocode;
 
 namespace RoboCodeProject
 {
-    class TurnGunTowardsScannedTank: TurnTask
+    class TurnHeadingToEnemy : TurnTask
     {
-        public TurnGunTowardsScannedTank(BlackBoard blackBoard)
+        public TurnHeadingToEnemy(BlackBoard blackBoard)
         {
             this.blackBoard = blackBoard;
         }
@@ -20,16 +20,17 @@ namespace RoboCodeProject
             if (blackBoard.lastScannedRobotEvent != null)
             {
                 //GetRotationToScannedRobotFuture();
-                double rotation = GetAngleOfGunHeading();
+                double rotation = GetAngleOfHeading();
                 blackBoard.robot.Out.WriteLine("Angle: " + rotation);
 
-                    blackBoard.robot.TurnGunRight(rotation);
-
+                blackBoard.robot.TurnRight(rotation);
+                blackBoard.robot.Ahead(10);
 
                 if (Math.Abs(rotation) < 10)
                 {
                     return BTNodeStatus.succes;
-                } else
+                }
+                else
                 {
                     return BTNodeStatus.running;
                 }

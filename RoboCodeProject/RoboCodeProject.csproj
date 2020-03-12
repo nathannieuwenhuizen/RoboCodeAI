@@ -47,13 +47,16 @@
     <Compile Include="BlackBoard.cs" />
     <Compile Include="BTNode.cs" />
     <Compile Include="Class1.cs" />
-    <Compile Include="ScanRobot.cs" />
+    <Compile Include="Global.cs" />
+    <Compile Include="Tasks\ScanRobot.cs" />
     <Compile Include="Tasks\MoveAhead.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Composites\Selector.cs" />
     <Compile Include="Composites\Sequence.cs" />
     <Compile Include="Tasks\Shoot.cs" />
     <Compile Include="Tasks\TrunGunTowardsScannedTank.cs" />
+    <Compile Include="Tasks\TurnHeadingToEnemy.cs" />
+    <Compile Include="Tasks\TurnTask.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

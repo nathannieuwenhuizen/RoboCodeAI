@@ -1,4 +1,5 @@
-﻿using Robocode;
+﻿using System;
+using Robocode;
 namespace RoboCodeProject
 {
     public class BlackBoard

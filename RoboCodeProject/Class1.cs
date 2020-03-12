@@ -9,6 +9,7 @@ namespace RoboCodeProject
 {
     public class Class1 : AdvancedRobot
     {
+        
         public BTNode BeahaviorTree;
         public BlackBoard blackBoard = new BlackBoard();
 
@@ -18,11 +19,11 @@ namespace RoboCodeProject
 
 BeahaviorTree = new Sequence(blackBoard,
                 new ScanRobot(blackBoard, 360),
-                new TurnGunTowardsScannedTank(blackBoard)
+                new TurnHeadingToEnemy(blackBoard)
                 );
-            IsAdjustGunForRobotTurn = true;
+            //IsAdjustGunForRobotTurn = true;
             IsAdjustRadarForGunTurn = true;
-
+            
             while (true)
             {
                 BeahaviorTree.Tick();
