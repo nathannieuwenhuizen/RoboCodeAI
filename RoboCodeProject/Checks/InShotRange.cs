@@ -8,17 +8,17 @@ namespace RoboCodeProject
 {
     class InShotRange: BTNode
     {
-        private float minDistance;
-        public InShotRange(BlackBoard blackBoard, float minDistance = 300)
+        private float maxDistance;
+        public InShotRange(BlackBoard blackBoard, float maxDistance = 300)
         {
             this.blackBoard = blackBoard;
-            this.minDistance = minDistance;
+            this.maxDistance = maxDistance;
         }
         public override BTNodeStatus Tick()
         {
             if (blackBoard.lastScannedRobotEvent != null)
             {
-                if (blackBoard.lastScannedRobotEvent.Distance < minDistance)
+                if (blackBoard.lastScannedRobotEvent.Distance < maxDistance)
                 {
                     if (Math.Abs(GetAngleOfGunHeading()) < 10)
                     {

@@ -22,7 +22,7 @@ namespace RoboCodeProject
         public override BTNodeStatus Tick()
         {
             double rotation = 0;
-            double accuracy = 5;
+            double accuracy = 1;
 
             if (toEnemy)
             {

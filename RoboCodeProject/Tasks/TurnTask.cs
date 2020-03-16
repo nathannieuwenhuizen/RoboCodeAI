@@ -77,7 +77,7 @@ namespace RoboCodeProject
             double enemyY = (blackBoard.robot.Y + Math.Cos(angle) * enemy.Distance);
             //double dirX = blackBoard.robot.be
 
-            blackBoard.robot.Out.WriteLine("Angle: " + angle + "enemy x: " + enemyX + " | enemy y: " + enemyY);
+            //blackBoard.robot.Out.WriteLine("Angle: " + angle + "enemy x: " + enemyX + " | enemy y: " + enemyY);
             return 0;
         }
         public override BTNodeStatus Tick()

@@ -12,20 +12,21 @@ namespace RoboCodeProject
         public TurnGunToEnemy(BlackBoard blackBoard, bool _toEnemy = true, Orientation _orientation = Orientation.none)
         {
             toEnemy = _toEnemy;
-            if (_orientation != Orientation.none)
-            {
-                blackBoard.gunOrientation = _orientation;
-            }
+            orientation = _orientation;
 
             this.blackBoard = blackBoard;
         }
 
         public override BTNodeStatus Tick()
         {
+            if (orientation != Orientation.none)
+            {
+                blackBoard.gunOrientation = orientation;
+            }
             double rotation = 0;
             double accuracy = 5;
 
-                            blackBoard.robot.Out.WriteLine("Orientation: " + blackBoard.gunOrientation + " | rotation " + rotation);
+                            //blackBoard.robot.Out.WriteLine("Orientation: " + blackBoard.gunOrientation + " | rotation " + rotation);
 
             if (toEnemy)
             {
@@ -72,7 +73,7 @@ namespace RoboCodeProject
                         break;
 
                 }
-                blackBoard.robot.Out.WriteLine("Orientation: " + blackBoard.gunOrientation + " | rotation " + rotation);
+                //blackBoard.robot.Out.WriteLine("Orientation: " + blackBoard.gunOrientation + " | rotation " + rotation);
 
                 rotation = (360 + rotation) % 360;
                 if (rotation < 180)
