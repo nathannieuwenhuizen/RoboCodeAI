@@ -13,13 +13,11 @@ namespace RoboCodeProject
     public class GenericSimpleTask : BTNode
     {
         private Func<bool?> callFunction;
-        public GenericSimpleTask(BlackBoard blackBoard, Func<bool?> _callFunction)
-        {
+        public GenericSimpleTask(BlackBoard blackBoard, Func<bool?> _callFunction) {
             callFunction = _callFunction;
             this.blackBoard = blackBoard;
         }
-        public override BTNodeStatus Tick()
-        {
+        public override BTNodeStatus Tick(){
             callFunction();
             return BTNodeStatus.succes;
         }

@@ -154,27 +154,19 @@ namespace RoboCodeProject
 
                 //otherwise it would crash/disabled
                 new TurnScan(blackBoard, 0),
-
                 //do dance if won
-                new CheckNode(blackBoard, () =>
-                {
-                    return blackBoard.wonRound == true;
-                },
-                WinBehaviour
-               ),
+                new CheckNode(blackBoard, () =>{ return blackBoard.wonRound == true;},
+                WinBehaviour),
 
-                //if won in previousround, start off with that behaviour.
+                //if won in previousround, start off with that behaviour. (attack or aim)
                 new CheckNode(blackBoard, () => { return Global.WonBehaviour == Behaviour.aim; },
                     new CheckNode(blackBoard, () => { return AimViable(); },
                         AimBehaviour
-                    )
-                ),
+                    )),
                 new CheckNode(blackBoard, () => { return Global.WonBehaviour == Behaviour.attack; },
                     new CheckNode(blackBoard, () => { return AttackViable(); },
                         AttackBehaviour
-                    )
-                ),
-
+                    )),
 
                 //do the three strategies. if the first one doesn't succeed, than do the second and so forth.
                 new CheckNode(blackBoard, () => { return CornerViable() && !WinningBehaviourViable(Behaviour.corner); },
@@ -196,17 +188,17 @@ namespace RoboCodeProject
                         return true;
                     })
                 )
-               );
+            );
 
             new TurnScan(blackBoard, 360).Tick();
-
             while (true)
             {
                 BeahaviorTree.Tick();
-                blackBoard.robot.Out.WriteLine("New round " + Global.LostBehaviour);
-                
             }
         }
+
+
+
 
         public bool WinningBehaviourViable(Behaviour otherBehaviour)
         {
