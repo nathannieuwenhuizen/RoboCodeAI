@@ -7,9 +7,9 @@ using Robocode;
 
 namespace RoboCodeProject
 {
-    public class TurnGunToEnemy: TurnTask
+    public class TurnGun: TurnTask
     {
-        public TurnGunToEnemy(BlackBoard blackBoard, bool _toEnemy = true, Orientation _orientation = Orientation.none)
+        public TurnGun(BlackBoard blackBoard, bool _toEnemy = true, Orientation _orientation = Orientation.none)
         {
             toEnemy = _toEnemy;
             orientation = _orientation;
@@ -73,7 +73,6 @@ namespace RoboCodeProject
                         break;
 
                 }
-                //blackBoard.robot.Out.WriteLine("Orientation: " + blackBoard.gunOrientation + " | rotation " + rotation);
 
                 rotation = (360 + rotation) % 360;
                 if (rotation < 180)

@@ -6,13 +6,15 @@ using System.Threading.Tasks;
 
 namespace RoboCodeProject
 {
-    public class ScanRobot : TurnTask
+    public class TurnScan : TurnTask
     {
         private float scanDegrees;
-        public ScanRobot(BlackBoard blackBoard, float scanDegrees = 0, Orientation _orientation = Orientation.none)
+        private bool set = false;
+        public TurnScan(BlackBoard blackBoard, float scanDegrees = 0, Orientation _orientation = Orientation.none, bool _set = false)
         {
             this.blackBoard = blackBoard;
             this.scanDegrees = scanDegrees;
+            set = _set;
             orientation = _orientation;
         }
         public override BTNodeStatus Tick()
@@ -43,16 +45,29 @@ namespace RoboCodeProject
                         break;
 
                 }
-                blackBoard.robot.Out.WriteLine("Orientation: " + blackBoard.gunOrientation + " | rotation " + rotation);
+                //blackBoard.robot.Out.WriteLine("Orientation: " + blackBoard.gunOrientation + " | rotation " + rotation);
 
                 rotation = (360 + rotation) % 360;
                 if (rotation < 180)
                 {
-                    blackBoard.robot.TurnRadarRight(rotation);
+                    if (set)
+                    {
+                        blackBoard.robot.SetTurnRadarRight(rotation);
+                    } else
+                    {
+                        blackBoard.robot.TurnRadarRight(rotation);
+                    }
                 }
                 else
                 {
-                    blackBoard.robot.TurnRadarLeft(360 - rotation);
+                    if (set)
+                    {
+                        blackBoard.robot.SetTurnRadarLeft(360 - rotation);
+                    }
+                    else
+                    {
+                        blackBoard.robot.TurnRadarLeft(360 - rotation);
+                    }
                 }
 
 

@@ -54,6 +54,7 @@
     <Compile Include="Checks\InShotRange.cs" />
     <Compile Include="Tasks\ChangeColor.cs" />
     <Compile Include="Checks\CheckNode.cs" />
+    <Compile Include="Tasks\GenericSimpleTask.cs" />
     <Compile Include="Tasks\ScanRobot.cs" />
     <Compile Include="Tasks\MoveAhead.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

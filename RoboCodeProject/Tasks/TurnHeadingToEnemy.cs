@@ -7,15 +7,17 @@ using Robocode;
 
 namespace RoboCodeProject
 {
-    public class TurnHeadingToEnemy : TurnTask
+    public class TurnHeading : TurnTask
     {
-        public TurnHeadingToEnemy(BlackBoard blackBoard, bool _toEnemy = true, Orientation _orientation = Orientation.none)
+        public bool set = false;
+        public TurnHeading(BlackBoard blackBoard, bool _toEnemy = true, Orientation _orientation = Orientation.none, bool _set = true)
         {
             toEnemy = _toEnemy;
             if (_orientation != Orientation.none)
             {
                 blackBoard.desiredOrientation = _orientation;
             }
+            set = _set;
             this.blackBoard = blackBoard;
         }
 
@@ -41,11 +43,31 @@ namespace RoboCodeProject
                     blackBoard.robot.SetTurnRight(rotation);
                     if (rotation > 180)
                     {
-                        blackBoard.robot.SetTurnLeft(360 - rotation);
+                        if (set)
+                        {
+                            blackBoard.robot.SetTurnLeft(360 - rotation);
+                            blackBoard.robot.Execute();
+                            return BTNodeStatus.succes;
+
+                        }
+                        else
+                        {
+                            blackBoard.robot.TurnLeft(360 - rotation);
+                        }
                     }
                     else
                     {
-                        blackBoard.robot.SetTurnRight(rotation);
+                        if (set)
+                        {
+                            blackBoard.robot.SetTurnRight(rotation);
+                            blackBoard.robot.Execute();
+                            return BTNodeStatus.succes;
+
+                        }
+                        else
+                        {
+                            blackBoard.robot.TurnRight(rotation);
+                        }
                     }
                 }
 

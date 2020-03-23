@@ -9,10 +9,12 @@ namespace RoboCodeProject
     class InShotRange: BTNode
     {
         private float maxDistance;
-        public InShotRange(BlackBoard blackBoard, float maxDistance = 300)
+        private float checklAngle;
+        public InShotRange(BlackBoard blackBoard, float maxDistance = 300, float _checkAngle = 10)
         {
             this.blackBoard = blackBoard;
             this.maxDistance = maxDistance;
+            this.checklAngle = _checkAngle;
         }
         public override BTNodeStatus Tick()
         {
@@ -20,13 +22,28 @@ namespace RoboCodeProject
             {
                 if (blackBoard.lastScannedRobotEvent.Distance < maxDistance)
                 {
-                    if (Math.Abs(GetAngleOfGunHeading()) < 10)
+                    if (Math.Abs(GetAngleOfGunHeading()) < checklAngle)
                     {
+                        if (blackBoard.behaviour == Behaviour.corner)
+                        {
+                            blackBoard.aimAttemptsCorner = 0;
+                        }
+                        else
+                        {
+                            blackBoard.aimAttemptsAttack = 0;
+                        }
                         return BTNodeStatus.failed;
-                    }
+                    } 
                 }
             }
-
+            if (blackBoard.behaviour == Behaviour.corner)
+            {
+                blackBoard.aimAttemptsCorner++;
+            }
+            else
+            {
+                blackBoard.aimAttemptsAttack++;
+            }
             return BTNodeStatus.succes;
         }
 
