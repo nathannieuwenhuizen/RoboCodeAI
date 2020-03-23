@@ -15,7 +15,7 @@ namespace RoboCodeProject
             toEnemy = _toEnemy;
             if (_orientation != Orientation.none)
             {
-                blackBoard.desiredOrientation = _orientation;
+                blackBoard.headingOrientation = _orientation;
             }
             set = _set;
             this.blackBoard = blackBoard;
@@ -73,7 +73,7 @@ namespace RoboCodeProject
 
             } else
             {
-                switch (blackBoard.desiredOrientation)
+                switch (blackBoard.headingOrientation)
                 {
                     case Orientation.left:
                         rotation = 270 - blackBoard.robot.Heading;

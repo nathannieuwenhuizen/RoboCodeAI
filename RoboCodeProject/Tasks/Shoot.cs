@@ -8,15 +8,24 @@ namespace RoboCodeProject
 {
     class Shoot:BTNode
     {
-        private int damage;
-        public Shoot(BlackBoard blackBoard, int _damage = 1)
+        private double damage;
+        private bool basedOnDistance;
+        public Shoot(BlackBoard blackBoard, double _damage = 1, bool _basedOnDistance = false)
         {
             this.blackBoard = blackBoard;
             damage = _damage;
+            basedOnDistance = _basedOnDistance;
         }
         public override BTNodeStatus Tick()
         {
-            blackBoard.robot.Fire(damage);
+            double finalDamage = damage;
+            if (basedOnDistance)
+            {
+                finalDamage = damage * (1 - (blackBoard.lastScannedRobotEvent.Distance / Global.BattleFieldDiagonal(blackBoard.robot)));
+                blackBoard.robot.Out.WriteLine("Damage: " + finalDamage );
+                //blackBoard.robot.Out.WriteLine("Damage: " + (blackBoard.lastScannedRobotEvent.Distance / Global.BattleFieldDiagonal(blackBoard.robot)));
+            }
+            blackBoard.robot.Fire(finalDamage);
             return BTNodeStatus.succes;
         }
 

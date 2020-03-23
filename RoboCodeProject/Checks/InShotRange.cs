@@ -24,26 +24,12 @@ namespace RoboCodeProject
                 {
                     if (Math.Abs(GetAngleOfGunHeading()) < checklAngle)
                     {
-                        if (blackBoard.behaviour == Behaviour.corner)
-                        {
-                            blackBoard.aimAttemptsCorner = 0;
-                        }
-                        else
-                        {
-                            blackBoard.aimAttemptsAttack = 0;
-                        }
+                        blackBoard.CurentBehaviourInfo.aimAttempts = 0;
                         return BTNodeStatus.failed;
                     } 
                 }
             }
-            if (blackBoard.behaviour == Behaviour.corner)
-            {
-                blackBoard.aimAttemptsCorner++;
-            }
-            else
-            {
-                blackBoard.aimAttemptsAttack++;
-            }
+            blackBoard.CurentBehaviourInfo.aimAttempts++;
             return BTNodeStatus.succes;
         }
 

@@ -41,31 +41,31 @@ namespace RoboCodeProject
                 case Orientation.forth:
                     if (blackBoard.robot.Y > blackBoard.robot.BattleFieldHeight - offset)
                     {
-                        blackBoard.desiredOrientation = Orientation.right;
+                        blackBoard.headingOrientation = Orientation.right;
                     }
                     
                     break;
                 case Orientation.left:
                     if (blackBoard.robot.X < offset)
                     {
-                        blackBoard.desiredOrientation = Orientation.forth;
+                        blackBoard.headingOrientation = Orientation.forth;
                     }
                     break;
                 case Orientation.right:
                     if (blackBoard.robot.X > blackBoard.robot.BattleFieldWidth - offset)
                     {
-                        blackBoard.desiredOrientation = Orientation.bottom;
+                        blackBoard.headingOrientation = Orientation.bottom;
                     }
                     break;
                 case Orientation.bottom:
                     if (blackBoard.robot.Y < offset)
                     {
-                        blackBoard.desiredOrientation = Orientation.left;
+                        blackBoard.headingOrientation = Orientation.left;
                     }
                     break;
             }
             
-            if (currentHeading != blackBoard.desiredOrientation)
+            if (currentHeading != blackBoard.headingOrientation)
             {
                 return BTNodeStatus.failed;
             }
