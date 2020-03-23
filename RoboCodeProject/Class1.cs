@@ -229,7 +229,7 @@ namespace RoboCodeProject
         }
         public bool AimViable()
         {
-            return blackBoard.aimInfo.consecutiveMisses < 10 && blackBoard.aimInfo.gotHit < 10 && Global.LostBehaviour != Behaviour.aim;
+            return blackBoard.aimInfo.consecutiveMisses < 10 && blackBoard.aimInfo.gotHit < 8 && Global.LostBehaviour != Behaviour.aim;
         }
 
         public bool AttackViable()
